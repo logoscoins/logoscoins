@@ -1,0 +1,11 @@
+[Unit]
+Description=LogosCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=LogosCoin
+ExecStart=/opt/LogosCoin/LogosCoind
+
+[Install]
+WantedBy=multi-user.target

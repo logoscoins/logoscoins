@@ -1,0 +1,9 @@
+Building LogosCoin
+
+See doc/readme-qt.rst for instructions on building LogosCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of LogosCoin.
+
+See doc/build-*.txt for instructions on building LogosCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of LogosCoin.

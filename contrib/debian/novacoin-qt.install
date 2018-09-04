@@ -1,0 +1,5 @@
+LogosCoin-qt usr/bin
+share/pixmaps/LogosCoin32.xpm usr/share/pixmaps
+share/pixmaps/LogosCoin80.xpm usr/share/pixmaps
+debian/LogosCoin-qt.desktop usr/share/applications
+debian/LogosCoin-qt.protocol usr/share/kde4/services/

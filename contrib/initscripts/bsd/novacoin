@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: LogosCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# LogosCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable LogosCoin service.
+# LogosCoin_config (path): Set to /usr/local/etc/LogosCoin.conf by default.
+# LogosCoin_user:  The user account LogosCoin daemon runs as. It uses 'root' user by default.
+# LogosCoin_group: The group account LogosCoin daemon runs as. It uses 'wheel' group by default.
+# LogosCoin_datadir (str): Default to "/var/db/LogosCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=LogosCoin
+rcvar=LogosCoin_enable
+
+: ${LogosCoin_enable:=NO}
+: ${LogosCoin_config=/usr/local/etc/LogosCoin.conf}
+: ${LogosCoin_datadir=/var/db/LogosCoin}
+: ${LogosCoin_user="root"}
+: ${LogosCoin_group="wheel"}
+
+required_files=${LogosCoin_config}
+command=/usr/local/bin/LogosCoind
+LogosCoin_chdir=${LogosCoin_datadir}
+pidfile="${LogosCoin_datadir}/LogosCoind.pid"
+stop_cmd=LogosCoin_stop
+command_args="-conf=${LogosCoin_config} -datadir=${LogosCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+LogosCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${LogosCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${LogosCoin_user}:${LogosCoin_group} ${LogosCoin_datadir}
+}
+
+LogosCoin_prestart()
+{
+	if [ ! -d "${LogosCoin_datadir}/." ]; then
+		LogosCoin_create_datadir || return 1
+	fi
+}
+
+LogosCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+LogosCoin_stop()
+{
+    LogosCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${LogosCoin_config} -datadir=${LogosCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

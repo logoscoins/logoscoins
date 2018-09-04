@@ -1,0 +1,2 @@
+debian/bin/LogosCoind usr/bin
+src/LogosCoind usr/lib/LogosCoin

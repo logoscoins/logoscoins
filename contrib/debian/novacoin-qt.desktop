@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=LogosCoin
+Comment=LogosCoin P2P Cryptocurrency
+Comment[ru]=LogosCoin, P2P криптовалюта
+Comment[fr]=LogosCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=LogosCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/LogosCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/LogosCoin80.xpm
+MimeType=x-scheme-handler/LogosCoin;
+Categories=Office;
